@@ -5,6 +5,7 @@
 module:testrunner
 
 GET     /                                       App.Index
+POST    /theta/take_picture                     Theta.TakePicture
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
