@@ -1,8 +1,13 @@
-{{set . "title" "Home"}}
+{{set . "title" "pazu"}}
+{{append . "moreScripts" "js/app.js"}}
 {{template "header.html" .}}
 
-<form action="/theta/take_picture" method="POST" class="pure-form">
+<h3>Commands</h3>
+<form action="/theta/pictures" method="POST" id="take_picture_form" class="pure-form">
   <input type="submit" value="Take Picture" class="pure-button pure-button-primary" />
 </form>
+
+<h3>Request Result</h3>
+<pre id="form_result"></pre>
 
 {{template "footer.html" .}}

@@ -25,7 +25,7 @@ func (c Theta) TakePicture() revel.Result {
 	revel.INFO.Println("camera.takePicture")
 	takePictureCommand := new(command.TakePictureCommand)
 	takePictureCommand.Parameters.SessionId = sessionId
-	client.CommandExecute(takePictureCommand)
+	takePictureCommandResponse, _ := client.CommandExecute(takePictureCommand)
 
 	// camera.closeSession
 	revel.INFO.Println("camera.closeSession:")
@@ -33,5 +33,6 @@ func (c Theta) TakePicture() revel.Result {
 	closeSessionCommand.Parameters.SessionId = sessionId
 	client.CommandExecute(closeSessionCommand)
 
-	return c.Redirect(App.Index)
+	c.Response.Status = 202
+	return c.RenderJson(takePictureCommandResponse)
 }
