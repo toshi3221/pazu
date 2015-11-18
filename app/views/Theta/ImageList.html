@@ -1,0 +1,21 @@
+<table class="pure-table pure-table-horizontal">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Uri</th>
+            <th>Size</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{range .entries}}
+        <tr>
+            <td>{{.Name}}</td>
+            <td>{{.Uri}}</td>
+            <td>{{.Size}}</td>
+            <td>{{.DateTimeZone}}</td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>

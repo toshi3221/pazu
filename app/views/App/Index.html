@@ -6,8 +6,11 @@
 <form action="/theta/pictures" method="POST" id="take_picture_form" class="pure-form">
   <input type="submit" value="Take Picture" class="pure-button pure-button-primary" />
 </form>
+<form action="/theta/images" method="GET" id="image_list_form" class="pure-form">
+  <input type="submit" value="Image List" class="pure-button pure-button-primary" />
+</form>
 
 <h3>Request Result</h3>
-<pre id="form_result"></pre>
+<div id="form_result"></div>
 
 {{template "footer.html" .}}

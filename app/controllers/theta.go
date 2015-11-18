@@ -36,3 +36,17 @@ func (c Theta) TakePicture() revel.Result {
 	c.Response.Status = 202
 	return c.RenderJson(takePictureCommandResponse)
 }
+
+func (c Theta) ImageList() revel.Result {
+        client, _ := theta_v2.NewClient("http://192.168.1.1")
+
+        listImagesCommand := new(command.ListImagesCommand)
+        entryCount, includeThumb := 10, false
+        listImagesCommand.Parameters.EntryCount = &entryCount;
+        listImagesCommand.Parameters.IncludeThumb = &includeThumb;
+
+        client.CommandExecute(listImagesCommand)
+        entries := *listImagesCommand.Results.Entries
+
+        return c.Render(entries)
+}
