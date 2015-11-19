@@ -1,8 +1,8 @@
 <table class="pure-table pure-table-horizontal">
     <thead>
         <tr>
+            <th>Thumbnail</th>
             <th>Name</th>
-            <th>Uri</th>
             <th>Size</th>
             <th>Date</th>
         </tr>
@@ -11,8 +11,8 @@
     <tbody>
         {{range .entries}}
         <tr>
+            <td><img src="{{url "Theta.ImageThumbnail" .Uri}}" /></td>
             <td>{{.Name}}</td>
-            <td>{{.Uri}}</td>
             <td>{{.Size}}</td>
             <td>{{.DateTimeZone}}</td>
         </tr>

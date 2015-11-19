@@ -4,6 +4,9 @@ import (
 	"github.com/revel/revel"
 	"github.com/toshi3221/theta_v2"
 	"github.com/toshi3221/theta_v2/command"
+	"io"
+	"io/ioutil"
+	"net/http"
 )
 
 type Theta struct {
@@ -38,15 +41,37 @@ func (c Theta) TakePicture() revel.Result {
 }
 
 func (c Theta) ImageList() revel.Result {
-        client, _ := theta_v2.NewClient("http://192.168.1.1")
+	client, _ := theta_v2.NewClient("http://192.168.1.1")
 
-        listImagesCommand := new(command.ListImagesCommand)
-        entryCount, includeThumb := 10, false
-        listImagesCommand.Parameters.EntryCount = &entryCount;
-        listImagesCommand.Parameters.IncludeThumb = &includeThumb;
+	listImagesCommand := new(command.ListImagesCommand)
+	entryCount, includeThumb := 10, false
+	listImagesCommand.Parameters.EntryCount = &entryCount
+	listImagesCommand.Parameters.IncludeThumb = &includeThumb
 
-        client.CommandExecute(listImagesCommand)
-        entries := *listImagesCommand.Results.Entries
+	client.CommandExecute(listImagesCommand)
+	entries := *listImagesCommand.Results.Entries
 
-        return c.Render(entries)
+	return c.Render(entries)
+}
+
+type JpegResponse string
+
+func (jr JpegResponse) Apply(req *revel.Request, resp *revel.Response) {
+	resp.WriteHeader(http.StatusOK, "image/jpeg")
+	resp.Out.Write([]byte(jr))
+}
+
+func (c Theta) ImageThumbnail(uri string) revel.Result {
+	client, _ := theta_v2.NewClient("http://192.168.1.1")
+
+	getImageCommand := new(command.GetImageCommand)
+	imageType := "thumb"
+	getImageCommand.Parameters.Type = &imageType
+	getImageCommand.Parameters.FileUri = &uri
+	response, _ := client.CommandExecute(getImageCommand)
+	revel.INFO.Println("  fileUri:", uri)
+	http_body := response.Results.(io.ReadCloser)
+	defer http_body.Close()
+	body, _ := ioutil.ReadAll(http_body)
+	return JpegResponse(body)
 }
