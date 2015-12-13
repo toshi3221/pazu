@@ -73,3 +73,7 @@ test
 We encourage you to contribute to Revel! Please check out the [Contributing to Revel
 guide](https://github.com/revel/revel/blob/master/CONTRIBUTING.md) for guidelines about how
 to proceed. [Join us](https://groups.google.com/forum/#!forum/revel-framework)!
+
+## The MIT License (MIT)
+
+See [LICENSE](LICENSE).
